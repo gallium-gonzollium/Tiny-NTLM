@@ -59,7 +59,7 @@ with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, sam + r"\Users") as user:
                 md.update(syskey + rid_enc + b"NTPASSWORD`0")
                 dec_ntlm = ARC4.new(md.digest()).decrypt(v[ntlm_offset+4:ntlm_offset+20])
             else:
-                print(f"{username}:{rid}:31d6cfe0d16ae931b73c59d7e0c089c0") # empty
+                print(f"{username}:{rid}:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0") # empty
                 continue
             
             k1    = str_to_key(rid_enc[:4]  + rid_enc[:3])
